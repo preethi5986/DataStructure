@@ -12,9 +12,9 @@ public class LinkedList {
 		}
 	}
 	
-	public void printList() {
+	private void printList() {
 		if(head != null) {
-			System.out.print(head.data + " ==> ");
+			System.out.print(head.data);
 			
 			printNode(head.next);
 		}
@@ -22,30 +22,40 @@ public class LinkedList {
 	
 	private void printNode(Node node) {
 		if(node != null) {
-			System.out.print(node.data + " ==> ");
+			System.out.print(" ==> " + node.data);
 			
 			Node temp = node;
-			while(temp.next != null) {
+			if(temp.next != null) {
 				printNode(temp.next);
 			}
 		}
 	}
 	
-	public void addNode(int position, Node newNode) {
+	private void addNode(int position, Node newNode) {
 		Node temp = head;
-		if(position == 0 && head != null) {
-			head = newNode;
-			newNode.next = temp;	
+		if (position == 0 && head != null) {
+			insert(newNode);
 			return;
-		} 
-		
-		
-		for(int i=0; i <= position-1; i++) {
+		}
+
+		for (int i = 0; i <= position; i++) {
 			temp = temp.next;
 		}
-		
-		
-		
+
+		if (temp.next != null) {
+			newNode.next = temp.next;
+			temp.next = newNode;
+		} else {
+			temp.next = newNode;
+		}
+
+		return;
+	}
+	
+	private void insert(Node newNode) {
+		Node temp = head;
+		head = newNode;
+		newNode.next = temp;
 	}
 	
 	public static void main(String[] args) {
@@ -57,7 +67,9 @@ public class LinkedList {
 		node1.next = node2;
 		
 		Node node3 = new Node(0);
-		list.addNode(0, node3);
+		list.insert(node3);
+		
+		list.addNode(1, new Node(1));
 		
 		list.printList();
 	}
